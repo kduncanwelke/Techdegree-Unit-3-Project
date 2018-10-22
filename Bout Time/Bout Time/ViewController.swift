@@ -17,9 +17,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var fact3: UIButton!
     @IBOutlet weak var fact4: UIButton!
 
+    @IBOutlet weak var arrowButton1: UIButton!
+    @IBOutlet weak var arrowButton2: UIButton!
+    @IBOutlet weak var arrowButton3: UIButton!
+    @IBOutlet weak var arrowButton4: UIButton!
+    @IBOutlet weak var arrowButton5: UIButton!
+    @IBOutlet weak var arrowButton6: UIButton!
+    
+    
     @IBOutlet weak var learnMore: UILabel!
-    @IBOutlet weak var resultButton: UIButton!
+
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var resultButton: UIButton!
     @IBOutlet weak var view1: UIView!
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
@@ -41,10 +50,18 @@ class ViewController: UIViewController {
     var fact3Index = 0
     var fact4Index = 0
     
+    var rounds = 0
+    var correctAnswers = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        factIndex = 0
+        rounds = 0
+        correctAnswers = 0
+        
+        disableWebButtons()
         showFacts()
         
         // round left-hand corners on views
@@ -53,7 +70,9 @@ class ViewController: UIViewController {
         roundCorners(view: view3, cornerRadius: 5.0)
         roundCorners(view: view4, cornerRadius: 5.0)
         
-        resetRound()
+        // hide results and learn more buttons
+        resultButton.isHidden = true
+        learnMore.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +81,41 @@ class ViewController: UIViewController {
     }
     
     // MARK: UI Updates
+    
+    func disableSwitchButtons() {
+        // disable fact switching
+        arrowButton1.isEnabled = false
+        arrowButton2.isEnabled = false
+        arrowButton3.isEnabled = false
+        arrowButton4.isEnabled = false
+        arrowButton5.isEnabled = false
+        arrowButton6.isEnabled = false
+    }
+    
+    func enableSwitchButtons() {
+        arrowButton1.isEnabled = true
+        arrowButton2.isEnabled = true
+        arrowButton3.isEnabled = true
+        arrowButton4.isEnabled = true
+        arrowButton5.isEnabled = true
+        arrowButton6.isEnabled = true
+    }
+    
+    func disableWebButtons() {
+        // disable buttons that go to web view
+        fact1.isEnabled = false
+        fact2.isEnabled = false
+        fact3.isEnabled = false
+        fact4.isEnabled = false
+    }
+    
+    func enableWebButtons() {
+        // enable buttons that go to web view
+        fact1.isEnabled = true
+        fact2.isEnabled = true
+        fact3.isEnabled = true
+        fact4.isEnabled = true
+    }
     
     func showFacts() {
        let buttons = [fact1, fact2, fact3, fact4]
@@ -85,13 +139,11 @@ class ViewController: UIViewController {
                 default:
                     break
                 }
-                    
-                factIndex += 1
+                 factIndex += 1
                 }
             }
         }
     }
-    
     
 
     // MARK: - Custom Functions
@@ -102,16 +154,42 @@ class ViewController: UIViewController {
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
     }
     
+    override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
+        let answer = checkAnswer()
+        
+        if let chosenAnswer = answer {
+            if chosenAnswer {
+                resultButton.setImage(#imageLiteral(resourceName: "next_round_success"), for: .normal)
+                resultButton.isHidden = false
+            } else {
+                resultButton.setImage(#imageLiteral(resourceName: "next_round_fail"), for: .normal)
+                resultButton.isHidden = false
+            }
+        }
+        disableSwitchButtons()
+        learnMore.isHidden = false
+    }
+    
+    func checkAnswer() -> Bool? {
+        guard let factArray = shuffledFacts else { return nil }
+        if factArray[fact1Index].year < factArray[fact2Index].year && factArray[fact2Index].year < factArray[fact3Index].year && factArray[fact3Index].year < factArray[fact4Index].year {
+            rounds += 1
+            correctAnswers += 1
+            return true
+        } else {
+            rounds += 1
+            return false
+        }
+    }
+    
     func resetRound() {
+        disableWebButtons()
+        enableSwitchButtons()
+        showFacts()
+        
         // hide results and learn more buttons
         resultButton.isHidden = true
         learnMore.isHidden = true
-        
-        // disable buttons to go to web view
-        fact1.isEnabled = false
-        fact2.isEnabled = false
-        fact3.isEnabled = false
-        fact4.isEnabled = false
     }
     
     // function for when timer is running
@@ -149,47 +227,26 @@ class ViewController: UIViewController {
     
     @IBAction func factSwap(_ sender: UIButton) {
         switch sender.tag {
-        case 1:
+        case 1, 2:
             (fact1Index, fact2Index) = (fact2Index, fact1Index)
             if let factArray = shuffledFacts {
 
-            fact1.setTitle(factArray[fact1Index].factText, for: .normal)
-            fact2.setTitle(factArray[fact2Index].factText, for: .normal)
+                fact1.setTitle(factArray[fact1Index].factText, for: .normal)
+                fact2.setTitle(factArray[fact2Index].factText, for: .normal)
             }
-        case 2:
-            (fact2Index, fact1Index) = (fact1Index, fact2Index)
-            if let factArray = shuffledFacts {
-                
-            fact1.setTitle(factArray[fact2Index].factText, for: .normal)
-            fact2.setTitle(factArray[fact1Index].factText, for: .normal)
-            }
-        case 3:
+        case 3, 4:
             (fact2Index, fact3Index) = (fact3Index, fact2Index)
             if let factArray = shuffledFacts {
                 
                 fact2.setTitle(factArray[fact2Index].factText, for: .normal)
                 fact3.setTitle(factArray[fact3Index].factText, for: .normal)
             }
-        case 4:
-            (fact3Index, fact2Index) = (fact2Index, fact3Index)
-            if let factArray = shuffledFacts {
-                
-                fact2.setTitle(factArray[fact3Index].factText, for: .normal)
-                fact3.setTitle(factArray[fact2Index].factText, for: .normal)
-            }
-        case 5:
+        case 5, 6:
             (fact3Index, fact4Index) = (fact4Index, fact3Index)
             if let factArray = shuffledFacts {
                 
                 fact3.setTitle(factArray[fact3Index].factText, for: .normal)
                 fact4.setTitle(factArray[fact4Index].factText, for: .normal)
-            }
-        case 6:
-            (fact4Index, fact3Index) = (fact3Index, fact4Index)
-            if let factArray = shuffledFacts {
-                
-                fact3.setTitle(factArray[fact4Index].factText, for: .normal)
-                fact4.setTitle(factArray[fact3Index].factText, for: .normal)
             }
         default:
             break
@@ -203,6 +260,18 @@ class ViewController: UIViewController {
     
     // go to next round
     @IBAction func nextRound(_ sender: UIButton) {
+        if rounds != 6 {
+            resetRound()
+        } else {
+            func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+                if segue.identifier == "resultsSegue" {
+                    if let resultsViewController = segue.destination as? resultViewController {
+                        resultsViewController.finalScore = correctAnswers
+                    }
+                }
+            }
+            performSegue(withIdentifier: "resultsSegue", sender: (Any).self)
+        }
     }
     
 }

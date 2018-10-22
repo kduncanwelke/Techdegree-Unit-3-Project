@@ -16,6 +16,7 @@
 		2D5FDB0B217A8CC9003B7139 /* IncorrectBuzz.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2D5FDB09217A8CC8003B7139 /* IncorrectBuzz.wav */; };
 		2D5FDB0F217A8E01003B7139 /* Facts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5FDB0E217A8E01003B7139 /* Facts.swift */; };
 		2DBB25D7217BA31E00DB9597 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBB25D6217BA31E00DB9597 /* Sounds.swift */; };
+		2DC8F3DE217E85090041A373 /* resultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8F3DD217E85090041A373 /* resultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		2D5FDB09217A8CC8003B7139 /* IncorrectBuzz.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = IncorrectBuzz.wav; sourceTree = "<group>"; };
 		2D5FDB0E217A8E01003B7139 /* Facts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Facts.swift; sourceTree = "<group>"; };
 		2DBB25D6217BA31E00DB9597 /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
+		2DC8F3DD217E85090041A373 /* resultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			children = (
 				2D5FDAF6217A8B05003B7139 /* AppDelegate.swift */,
 				2D5FDAF8217A8B05003B7139 /* ViewController.swift */,
+				2DC8F3DD217E85090041A373 /* resultViewController.swift */,
 				2D5FDAFA217A8B05003B7139 /* Main.storyboard */,
 				2D5FDAFD217A8B05003B7139 /* Assets.xcassets */,
 				2D5FDAFF217A8B05003B7139 /* LaunchScreen.storyboard */,
@@ -150,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DC8F3DE217E85090041A373 /* resultViewController.swift in Sources */,
 				2D5FDAF9217A8B05003B7139 /* ViewController.swift in Sources */,
 				2D5FDB0F217A8E01003B7139 /* Facts.swift in Sources */,
 				2D5FDAF7217A8B05003B7139 /* AppDelegate.swift in Sources */,
