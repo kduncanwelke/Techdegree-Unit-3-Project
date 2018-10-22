@@ -98,10 +98,13 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGZ-uR-k53">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGZ-uR-k53">
                                                 <rect key="frame" x="293" y="0.0" width="42" height="119.5"/>
                                                 <state key="normal" image="down_full"/>
                                                 <state key="highlighted" image="down_full_selected"/>
+                                                <connections>
+                                                    <action selector="factSwap:" destination="m8r-Li-VP1" eventType="touchUpInside" id="Bqk-Lw-x2h"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -131,17 +134,23 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="E9Y-ny-vLd">
                                                 <rect key="frame" x="293" y="0.0" width="42" height="119"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7X-sp-AxH">
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7X-sp-AxH">
                                                         <rect key="frame" x="0.0" y="0.0" width="42" height="59.5"/>
                                                         <state key="normal" image="up_half"/>
                                                         <state key="selected" image="up_full_selected"/>
                                                         <state key="highlighted" image="up_half_selected"/>
+                                                        <connections>
+                                                            <action selector="factSwap:" destination="m8r-Li-VP1" eventType="touchUpInside" id="mZa-ec-TMF"/>
+                                                        </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLC-yX-c7A">
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLC-yX-c7A">
                                                         <rect key="frame" x="0.0" y="59.5" width="42" height="59.5"/>
                                                         <state key="normal" image="down_half"/>
                                                         <state key="selected" image="down_half_selected"/>
                                                         <state key="highlighted" image="down_half_selected"/>
+                                                        <connections>
+                                                            <action selector="factSwap:" destination="m8r-Li-VP1" eventType="touchUpInside" id="TRI-ke-kQw"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -173,17 +182,23 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="NmK-Oq-b6D">
                                                 <rect key="frame" x="293" y="0.0" width="42" height="119.5"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mrp-Nz-5vm">
+                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mrp-Nz-5vm">
                                                         <rect key="frame" x="0.0" y="0.0" width="42" height="59.5"/>
                                                         <state key="normal" image="up_half"/>
                                                         <state key="selected" image="up_half_selected"/>
                                                         <state key="highlighted" image="up_half_selected"/>
+                                                        <connections>
+                                                            <action selector="factSwap:" destination="m8r-Li-VP1" eventType="touchUpInside" id="Ilt-d7-kFg"/>
+                                                        </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rAA-mr-BjJ">
+                                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rAA-mr-BjJ">
                                                         <rect key="frame" x="0.0" y="59.5" width="42" height="60"/>
                                                         <state key="normal" image="down_half"/>
                                                         <state key="selected" image="down_half_selected"/>
                                                         <state key="highlighted" image="down_half_selected"/>
+                                                        <connections>
+                                                            <action selector="factSwap:" destination="m8r-Li-VP1" eventType="touchUpInside" id="ufe-rv-uKz"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -212,11 +227,14 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skO-e6-dTK">
+                                            <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="skO-e6-dTK">
                                                 <rect key="frame" x="293" y="0.0" width="42" height="119"/>
                                                 <state key="normal" image="up_full"/>
                                                 <state key="selected" image="up_full_selected"/>
                                                 <state key="highlighted" image="up_full_selected"/>
+                                                <connections>
+                                                    <action selector="factSwap:" destination="m8r-Li-VP1" eventType="touchUpInside" id="xVF-Sz-pf1"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>

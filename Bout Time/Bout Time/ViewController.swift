@@ -36,6 +36,11 @@ class ViewController: UIViewController {
     var timer = Timer()
     var isTimerOn = false
     
+    var fact1Index = 0
+    var fact2Index = 0
+    var fact3Index = 0
+    var fact4Index = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +72,20 @@ class ViewController: UIViewController {
                 let currentFact = factArray[factIndex]
                 if let button = button {
                 button.setTitle(currentFact.factText, for: .normal)
+                
+                switch button {
+                case fact1:
+                    fact1Index = factIndex
+                case fact2:
+                    fact2Index = factIndex
+                case fact3:
+                    fact3Index = factIndex
+                case fact4:
+                    fact4Index = factIndex
+                default:
+                    break
+                }
+                    
                 factIndex += 1
                 }
             }
@@ -127,6 +146,56 @@ class ViewController: UIViewController {
 
     
     // MARK: - Actions
+    
+    @IBAction func factSwap(_ sender: UIButton) {
+        switch sender.tag {
+        case 1:
+            (fact1Index, fact2Index) = (fact2Index, fact1Index)
+            if let factArray = shuffledFacts {
+
+            fact1.setTitle(factArray[fact1Index].factText, for: .normal)
+            fact2.setTitle(factArray[fact2Index].factText, for: .normal)
+            }
+        case 2:
+            (fact2Index, fact1Index) = (fact1Index, fact2Index)
+            if let factArray = shuffledFacts {
+                
+            fact1.setTitle(factArray[fact2Index].factText, for: .normal)
+            fact2.setTitle(factArray[fact1Index].factText, for: .normal)
+            }
+        case 3:
+            (fact2Index, fact3Index) = (fact3Index, fact2Index)
+            if let factArray = shuffledFacts {
+                
+                fact2.setTitle(factArray[fact2Index].factText, for: .normal)
+                fact3.setTitle(factArray[fact3Index].factText, for: .normal)
+            }
+        case 4:
+            (fact3Index, fact2Index) = (fact2Index, fact3Index)
+            if let factArray = shuffledFacts {
+                
+                fact2.setTitle(factArray[fact3Index].factText, for: .normal)
+                fact3.setTitle(factArray[fact2Index].factText, for: .normal)
+            }
+        case 5:
+            (fact3Index, fact4Index) = (fact4Index, fact3Index)
+            if let factArray = shuffledFacts {
+                
+                fact3.setTitle(factArray[fact3Index].factText, for: .normal)
+                fact4.setTitle(factArray[fact4Index].factText, for: .normal)
+            }
+        case 6:
+            (fact4Index, fact3Index) = (fact3Index, fact4Index)
+            if let factArray = shuffledFacts {
+                
+                fact3.setTitle(factArray[fact4Index].factText, for: .normal)
+                fact4.setTitle(factArray[fact3Index].factText, for: .normal)
+            }
+        default:
+            break
+        }
+    }
+    
     
     // go to web view
     @IBAction func factTap(_ sender: UIButton) {
