@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import WebKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, WKNavigationDelegate {
     
     // MARK: - Outlets
+    
+    @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var fact1: UIButton!
     @IBOutlet weak var fact2: UIButton!
@@ -24,9 +27,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var arrowButton5: UIButton!
     @IBOutlet weak var arrowButton6: UIButton!
     
-    
     @IBOutlet weak var learnMore: UILabel!
-
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var resultButton: UIButton!
     @IBOutlet weak var view1: UIView!
@@ -34,8 +35,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var view3: UIView!
     @IBOutlet weak var view4: UIView!
     
+    @IBOutlet weak var webviewBar: UIButton!
+    
     
     // MARK: - Properties
+    var webView: WKWebView!
+    
     var shuffledFacts = Fact.shuffleFacts()
     
     var factIndex = 0
@@ -113,6 +118,7 @@ class ViewController: UIViewController {
         fact2.isEnabled = false
         fact3.isEnabled = false
         fact4.isEnabled = false
+        webviewBar.isHidden = true
     }
     
     func enableWebButtons() {
@@ -195,6 +201,7 @@ class ViewController: UIViewController {
         }
         disableSwitchButtons()
         learnMore.isHidden = false
+        enableWebButtons()
         hideTimer()
     }
     
@@ -268,9 +275,66 @@ class ViewController: UIViewController {
         }
     }
     
+    // hide items to see web view
+    func hideItems() {
+        stackView.isHidden = true
+        resultButton.isHidden = true
+        learnMore.isHidden = true
+    }
+    
+    // show items again and hide web bar
+    func showItems() {
+        stackView.isHidden = false
+        resultButton.isHidden = false
+        learnMore.isHidden = false
+        webviewBar.isHidden = true
+    }
+    
     
     // go to web view
     @IBAction func factTap(_ sender: UIButton) {
+        switch sender.tag {
+        case 1:
+            if let factArray = shuffledFacts {
+                guard let url = factArray[fact1Index].moreInfo else { return }
+                loadWebsite(url: url)
+            }
+        case 2:
+            if let factArray = shuffledFacts {
+                guard let url = factArray[fact2Index].moreInfo else { return }
+                loadWebsite(url: url)
+            }
+        case 3:
+            if let factArray = shuffledFacts {
+                guard let url = factArray[fact3Index].moreInfo else { return }
+                loadWebsite(url: url)
+            }
+        case 4:
+            if let factArray = shuffledFacts {
+                guard let url = factArray[fact4Index].moreInfo else { return }
+                loadWebsite(url: url)
+            }
+        default: break
+        }
+    }
+    
+    func loadWebsite(url: URL) {
+        let request = URLRequest(url: url)
+        webView = WKWebView(frame: self.view.frame)
+        webView.navigationDelegate = self
+        webView.load(request)
+        self.view.addSubview(webView)
+        self.view.sendSubview(toBack: webView)
+        hideItems()
+        webviewBar.isHidden = false
+        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
+    }
+    
+    
+    @IBAction func dismissWebView(_ sender: UIButton) {
+        webView.removeFromSuperview()
+        showItems()
+        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal 
     }
     
     // go to next round
