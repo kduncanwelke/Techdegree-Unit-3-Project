@@ -143,6 +143,9 @@ class ViewController: UIViewController {
                 }
             }
         }
+        timerLabel.isHidden = false
+        timerLabel.text = "0.\(seconds)"
+        runTimer()
     }
     
 
@@ -155,6 +158,22 @@ class ViewController: UIViewController {
     }
     
     override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
+        showResult()
+    }
+    
+    func checkAnswer() -> Bool? {
+        guard let factArray = shuffledFacts else { return nil }
+        if factArray[fact1Index].year < factArray[fact2Index].year && factArray[fact2Index].year < factArray[fact3Index].year && factArray[fact3Index].year < factArray[fact4Index].year {
+            rounds += 1
+            correctAnswers += 1
+            return true
+        } else {
+            rounds += 1
+            return false
+        }
+    }
+    
+    func showResult() {
         let answer = checkAnswer()
         
         if let chosenAnswer = answer {
@@ -168,18 +187,7 @@ class ViewController: UIViewController {
         }
         disableSwitchButtons()
         learnMore.isHidden = false
-    }
-    
-    func checkAnswer() -> Bool? {
-        guard let factArray = shuffledFacts else { return nil }
-        if factArray[fact1Index].year < factArray[fact2Index].year && factArray[fact2Index].year < factArray[fact3Index].year && factArray[fact3Index].year < factArray[fact4Index].year {
-            rounds += 1
-            correctAnswers += 1
-            return true
-        } else {
-            rounds += 1
-            return false
-        }
+        hideTimer()
     }
     
     func resetRound() {
@@ -205,12 +213,11 @@ class ViewController: UIViewController {
         // if time runs out reset timer, display correct answer, load next round
         if seconds == 0 {
             timer.invalidate()
-            timerLabel.text = "You ran out of time!"
             
-            // increase questions asked/missed then go to next round
-            //missedQuestions += 1
-            //questionsAsked += 1
+            showResult()
             
+            // increase round count
+            rounds += 1
             seconds = 60
         }
     }
