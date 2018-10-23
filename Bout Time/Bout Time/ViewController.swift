@@ -53,10 +53,16 @@ class ViewController: UIViewController {
     var rounds = 0
     var correctAnswers = 0
     
+    let correctSound = Sound(number: 0, resourceName: "CorrectDing", type: "wav")
+    let incorrectSound = Sound(number: 1, resourceName: "IncorrectBuzz", type: "wav")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        Sound.loadSound(number: &correctSound.number, resourceName: correctSound.resourceName, type: correctSound.type)
+        Sound.loadSound(number: &incorrectSound.number, resourceName: incorrectSound.resourceName, type: incorrectSound.type)
+        
         factIndex = 0
         rounds = 0
         correctAnswers = 0
@@ -166,9 +172,11 @@ class ViewController: UIViewController {
         if factArray[fact1Index].year < factArray[fact2Index].year && factArray[fact2Index].year < factArray[fact3Index].year && factArray[fact3Index].year < factArray[fact4Index].year {
             rounds += 1
             correctAnswers += 1
+            Sound.playSound(number: correctSound.number)
             return true
         } else {
             rounds += 1
+            Sound.playSound(number: incorrectSound.number)
             return false
         }
     }
@@ -270,16 +278,16 @@ class ViewController: UIViewController {
         if rounds != 6 {
             resetRound()
         } else {
-            func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-                if segue.identifier == "resultsSegue" {
-                    if let resultsViewController = segue.destination as? resultViewController {
-                        resultsViewController.finalScore = correctAnswers
-                    }
-                }
-            }
             performSegue(withIdentifier: "resultsSegue", sender: (Any).self)
         }
     }
     
+    // prepare for segue to results screen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is resultViewController {
+            let destinationViewController = segue.destination as? resultViewController
+            destinationViewController?.finalScore = correctAnswers
+        }
+    }
 }
 
