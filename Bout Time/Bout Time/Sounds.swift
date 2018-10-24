@@ -29,4 +29,5 @@ class Sound {
     static func playSound(number: SystemSoundID) {
         AudioServicesPlaySystemSound(number)
     }
+    
 }

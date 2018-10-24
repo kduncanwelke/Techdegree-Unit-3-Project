@@ -35,12 +35,10 @@ class ViewController: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var view3: UIView!
     @IBOutlet weak var view4: UIView!
     
-    @IBOutlet weak var webviewBar: UIButton!
-    
     
     // MARK: - Properties
     
-    var webView: WKWebView!
+    //var webView: WKWebView!
     
     var shuffledFacts = Fact.shuffleFacts()
     
@@ -60,17 +58,17 @@ class ViewController: UIViewController, WKNavigationDelegate {
     var timer = Timer()
     var isTimerOn = false
     
-    
+
     // sounds
     let correctSound = Sound(number: 0, resourceName: "CorrectDing", type: "wav")
     let incorrectSound = Sound(number: 1, resourceName: "IncorrectBuzz", type: "wav")
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         // load sounds
+
         Sound.loadSound(number: &correctSound.number, resourceName: correctSound.resourceName, type: correctSound.type)
         Sound.loadSound(number: &incorrectSound.number, resourceName: incorrectSound.resourceName, type: incorrectSound.type)
         
@@ -137,7 +135,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         fact2.isEnabled = false
         fact3.isEnabled = false
         fact4.isEnabled = false
-        webviewBar.isHidden = true
+        //webviewBar.isHidden = true
     }
     
     func enableWebButtons() {
@@ -160,7 +158,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         stackView.isHidden = false
         resultButton.isHidden = false
         learnMore.isHidden = false
-        webviewBar.isHidden = true
+       // webviewBar.isHidden = true
     }
     
     func showFacts() {
@@ -214,7 +212,9 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
         // respond to device shake motion
-        showResult()
+        if event?.subtype == .motionShake {
+           showResult()
+        }
     }
     
     func checkAnswer() -> Bool? {
@@ -257,7 +257,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     // function for when timer is running
     func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
     }
     
     // run while timer is active
@@ -285,17 +285,20 @@ class ViewController: UIViewController, WKNavigationDelegate {
     }
     
     func loadWebsite(url: URL) {
+        let webViewController = WebViewController()
+        webViewController.url = url
+        
+        present(webViewController, animated: true)
         // run when fact is tapped at end of round
-        let request = URLRequest(url: url)
+       /* let request = URLRequest(url: url)
         webView = WKWebView(frame: self.view.frame)
         webView.navigationDelegate = self
         webView.load(request)
         self.view.addSubview(webView)
-        self.view.sendSubview(toBack: webView)
-        
+        self.view.sendSubview(toBack: webView) */
         // hide stack view etc, show web view bar, hide status bar
-        hideItems()
-        webviewBar.isHidden = false
+        //hideItems()
+        //webviewBar.isHidden = false
         UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
     }
 
@@ -358,12 +361,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
         }
     }
 
-    @IBAction func dismissWebView(_ sender: UIButton) {
-        // dismiss web view when web view bar is tapped, show stack view etc again, show status bar
-        webView.removeFromSuperview()
-        showItems()
-        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
-    }
     
     @IBAction func nextRound(_ sender: UIButton) {
         // go to next round if six rounds have not been achieved, otherwise segue to results
@@ -376,8 +373,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     // prepare for segue to results screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is resultViewController {
-            let destinationViewController = segue.destination as? resultViewController
+        if segue.destination is ResultViewController {
+            let destinationViewController = segue.destination as? ResultViewController
             destinationViewController?.finalScore = correctAnswers
         }
     }
