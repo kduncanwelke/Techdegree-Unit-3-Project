@@ -35,10 +35,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var view3: UIView!
     @IBOutlet weak var view4: UIView!
     
+    @IBOutlet weak var webViewBar: UIButton!
     
     // MARK: - Properties
     
-    //var webView: WKWebView!
+    var webView: WKWebView!
     
     var shuffledFacts = Fact.shuffleFacts()
     
@@ -57,7 +58,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
     var seconds = 60
     var timer = Timer()
     var isTimerOn = false
-    
 
     // sounds
     let correctSound = Sound(number: 0, resourceName: "CorrectDing", type: "wav")
@@ -68,7 +68,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         
         // load sounds
-
         Sound.loadSound(number: &correctSound.number, resourceName: correctSound.resourceName, type: correctSound.type)
         Sound.loadSound(number: &incorrectSound.number, resourceName: incorrectSound.resourceName, type: incorrectSound.type)
         
@@ -135,7 +134,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         fact2.isEnabled = false
         fact3.isEnabled = false
         fact4.isEnabled = false
-        //webviewBar.isHidden = true
+        webViewBar.isHidden = true
     }
     
     func enableWebButtons() {
@@ -158,7 +157,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         stackView.isHidden = false
         resultButton.isHidden = false
         learnMore.isHidden = false
-       // webviewBar.isHidden = true
+        webViewBar.isHidden = true
     }
     
     func showFacts() {
@@ -285,20 +284,16 @@ class ViewController: UIViewController, WKNavigationDelegate {
     }
     
     func loadWebsite(url: URL) {
-        let webViewController = WebViewController()
-        webViewController.url = url
-        
-        present(webViewController, animated: true)
         // run when fact is tapped at end of round
-       /* let request = URLRequest(url: url)
+       let request = URLRequest(url: url)
         webView = WKWebView(frame: self.view.frame)
         webView.navigationDelegate = self
         webView.load(request)
         self.view.addSubview(webView)
-        self.view.sendSubview(toBack: webView) */
+        self.view.sendSubview(toBack: webView)
         // hide stack view etc, show web view bar, hide status bar
-        //hideItems()
-        //webviewBar.isHidden = false
+        hideItems()
+        webViewBar.isHidden = false
         UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
     }
 
@@ -377,6 +372,13 @@ class ViewController: UIViewController, WKNavigationDelegate {
             let destinationViewController = segue.destination as? ResultViewController
             destinationViewController?.finalScore = correctAnswers
         }
+    }
+    
+    @IBAction func dismissWebView(_ sender: UIButton) {
+        // dismiss web view when web view bar is tapped, show status bar
+        showItems()
+        webView.removeFromSuperview()
+        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
     }
     
     

@@ -265,19 +265,32 @@
                                     <action selector="nextRound:" destination="m8r-Li-VP1" eventType="touchUpInside" id="oba-Sk-JQq"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q0O-Cr-vjo">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="q0O-Cr-vjo" secondAttribute="height" multiplier="375:47" id="liR-Sp-aW5"/>
+                                </constraints>
+                                <state key="normal" image="webview_bar"/>
+                                <connections>
+                                    <action selector="dismissWebView:" destination="m8r-Li-VP1" eventType="touchUpInside" id="MXW-kE-1mf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.1647058824" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="SwK-sq-vqO" firstAttribute="centerX" secondItem="s6v-2q-vQd" secondAttribute="centerX" id="8Wo-0z-U4s"/>
                             <constraint firstItem="QQS-IC-e0t" firstAttribute="centerX" secondItem="s6v-2q-vQd" secondAttribute="centerX" id="8iz-Gk-iRC"/>
+                            <constraint firstItem="q0O-Cr-vjo" firstAttribute="leading" secondItem="7fc-Ot-6C2" secondAttribute="leading" id="C5M-5Y-Ffx"/>
                             <constraint firstItem="BUc-aH-7GT" firstAttribute="leading" secondItem="7fc-Ot-6C2" secondAttribute="leading" constant="20" id="M16-oU-J90"/>
                             <constraint firstItem="VNr-tj-Y76" firstAttribute="top" secondItem="bJH-3i-UjP" secondAttribute="bottom" constant="20" id="MRD-YJ-6q0"/>
                             <constraint firstItem="7fc-Ot-6C2" firstAttribute="bottom" secondItem="QQS-IC-e0t" secondAttribute="bottom" constant="51" id="N5X-9K-vQN"/>
                             <constraint firstItem="BUc-aH-7GT" firstAttribute="centerX" secondItem="s6v-2q-vQd" secondAttribute="centerX" id="Qhr-cF-1GT"/>
+                            <constraint firstItem="q0O-Cr-vjo" firstAttribute="trailing" secondItem="7fc-Ot-6C2" secondAttribute="trailing" id="RTE-kl-C8u"/>
                             <constraint firstItem="7fc-Ot-6C2" firstAttribute="bottom" secondItem="SwK-sq-vqO" secondAttribute="bottom" constant="30" id="fsV-TG-NBv"/>
                             <constraint firstItem="VNr-tj-Y76" firstAttribute="centerX" secondItem="s6v-2q-vQd" secondAttribute="centerX" id="gYy-E8-gUf"/>
                             <constraint firstItem="7fc-Ot-6C2" firstAttribute="bottom" secondItem="VNr-tj-Y76" secondAttribute="bottom" constant="56" id="k0x-ve-RVr"/>
                             <constraint firstItem="7fc-Ot-6C2" firstAttribute="bottom" secondItem="BUc-aH-7GT" secondAttribute="bottom" constant="120" id="kWa-aD-F8Q"/>
+                            <constraint firstItem="q0O-Cr-vjo" firstAttribute="top" secondItem="s6v-2q-vQd" secondAttribute="top" id="tzK-Wk-fYI"/>
                             <constraint firstItem="BUc-aH-7GT" firstAttribute="top" secondItem="7fc-Ot-6C2" secondAttribute="top" constant="20" id="vEB-0V-GfF"/>
                             <constraint firstItem="7fc-Ot-6C2" firstAttribute="trailing" secondItem="BUc-aH-7GT" secondAttribute="trailing" constant="20" id="xP6-Yr-PLn"/>
                         </constraints>
@@ -302,6 +315,7 @@
                         <outlet property="view2" destination="qYm-sw-WEK" id="KwB-Ct-zfI"/>
                         <outlet property="view3" destination="Xjd-3c-6vJ" id="1zK-AB-1EB"/>
                         <outlet property="view4" destination="bJH-3i-UjP" id="RWn-Di-b7V"/>
+                        <outlet property="webViewBar" destination="q0O-Cr-vjo" id="MYU-xy-A4j"/>
                         <segue destination="ep8-OH-U92" kind="show" identifier="resultsSegue" id="cbP-oC-dWd"/>
                     </connections>
                 </viewController>
@@ -360,42 +374,6 @@
             </objects>
             <point key="canvasLocation" x="1593" y="133"/>
         </scene>
-        <!--Web View Controller-->
-        <scene sceneID="Uv3-CU-SBW">
-            <objects>
-                <viewController storyboardIdentifier="WebViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="r7e-Qa-P3S" customClass="WebViewController" customModule="Bout_Time" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="p5X-Bv-E8S">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wxl-BG-bGN">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="47"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="wxl-BG-bGN" secondAttribute="height" multiplier="375:47" id="En4-4S-stq"/>
-                                </constraints>
-                                <state key="normal" image="webview_bar"/>
-                                <connections>
-                                    <action selector="dismissWebView:" destination="r7e-Qa-P3S" eventType="touchUpInside" id="8QJ-nr-H2k"/>
-                                    <segue destination="m8r-Li-VP1" kind="show" id="F9c-g4-U9i"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="wxl-BG-bGN" firstAttribute="trailing" secondItem="aFe-wQ-q48" secondAttribute="trailing" id="Afm-ek-oF4"/>
-                            <constraint firstItem="wxl-BG-bGN" firstAttribute="top" secondItem="p5X-Bv-E8S" secondAttribute="top" id="IjA-on-cai"/>
-                            <constraint firstItem="wxl-BG-bGN" firstAttribute="leading" secondItem="aFe-wQ-q48" secondAttribute="leading" id="ed2-wv-H0Q"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="aFe-wQ-q48"/>
-                    </view>
-                    <connections>
-                        <outlet property="navBar" destination="wxl-BG-bGN" id="mhX-fW-0I6"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TuC-vA-Ybb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2361" y="132"/>
-        </scene>
     </scenes>
     <resources>
         <image name="down_full" width="158" height="457"/>
@@ -410,7 +388,4 @@
         <image name="up_half_selected" width="158" height="229"/>
         <image name="webview_bar" width="1333" height="167"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="F9c-g4-U9i"/>
-    </inferredMetricsTieBreakers>
 </document>
