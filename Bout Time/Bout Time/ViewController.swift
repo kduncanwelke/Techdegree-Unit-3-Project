@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import WebKit
 
-class ViewController: UIViewController, WKNavigationDelegate {
+class ViewController: UIViewController {
     
     // MARK: - Outlets
     
@@ -35,11 +34,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
     @IBOutlet weak var view3: UIView!
     @IBOutlet weak var view4: UIView!
     
-    @IBOutlet weak var webViewBar: UIButton!
-    
     // MARK: - Properties
-    
-    var webView: WKWebView!
     
     var shuffledFacts = Fact.shuffleFacts()
     
@@ -92,12 +87,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
         resultButton.isHidden = true
         learnMore.isHidden = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     // MARK: UI Updates
     
@@ -134,7 +123,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
         fact2.isEnabled = false
         fact3.isEnabled = false
         fact4.isEnabled = false
-        webViewBar.isHidden = true
     }
     
     func enableWebButtons() {
@@ -157,7 +145,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
         stackView.isHidden = false
         resultButton.isHidden = false
         learnMore.isHidden = false
-        webViewBar.isHidden = true
     }
     
     func showFacts() {
@@ -282,22 +269,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         timerLabel.isHidden = true
         seconds = 60
     }
-    
-    func loadWebsite(url: URL) {
-        // run when fact is tapped at end of round
-       let request = URLRequest(url: url)
-        webView = WKWebView(frame: self.view.frame)
-        webView.navigationDelegate = self
-        webView.load(request)
-        self.view.addSubview(webView)
-        self.view.sendSubview(toBack: webView)
-        // hide stack view etc, show web view bar, hide status bar
-        hideItems()
-        webViewBar.isHidden = false
-        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelStatusBar
-    }
 
-    
     // MARK: - Actions
     
     @IBAction func factSwap(_ sender: UIButton) {
@@ -330,30 +302,37 @@ class ViewController: UIViewController, WKNavigationDelegate {
     }
     
     @IBAction func factTap(_ sender: UIButton) {
+        guard let webViewController = storyboard?.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController else { return }
+        var webURL: URL?
+        
         // go to web view, loading index to access fact and its url property
         switch sender.tag {
         case 1:
             if let factArray = shuffledFacts {
                 guard let url = factArray[fact1Index].moreInfo else { return }
-                loadWebsite(url: url)
+                webURL = url
             }
         case 2:
             if let factArray = shuffledFacts {
                 guard let url = factArray[fact2Index].moreInfo else { return }
-                loadWebsite(url: url)
+                webURL = url
             }
         case 3:
             if let factArray = shuffledFacts {
                 guard let url = factArray[fact3Index].moreInfo else { return }
-                loadWebsite(url: url)
+                webURL = url
             }
         case 4:
             if let factArray = shuffledFacts {
                 guard let url = factArray[fact4Index].moreInfo else { return }
-                loadWebsite(url: url)
+                webURL = url
             }
         default: break
         }
+        
+        guard let url = webURL else { return }
+        webViewController.url = url
+        present(webViewController, animated: true)
     }
 
     
@@ -373,14 +352,5 @@ class ViewController: UIViewController, WKNavigationDelegate {
             destinationViewController?.finalScore = correctAnswers
         }
     }
-    
-    @IBAction func dismissWebView(_ sender: UIButton) {
-        // dismiss web view when web view bar is tapped, show status bar
-        showItems()
-        webView.removeFromSuperview()
-        UIApplication.shared.keyWindow?.windowLevel = UIWindowLevelNormal
-    }
-    
-    
 }
 
